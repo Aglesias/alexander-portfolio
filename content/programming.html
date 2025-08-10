@@ -1,0 +1,105 @@
+<h2>PROGRAMMING SPECIALIZATION</h2>
+
+<div class="programming-content">
+    <div class="programming-intro">
+        <p>Here are some technical projects I've worked on, focusing on performance optimization and development workflow improvements.</p>
+    </div>
+
+
+    <div class="programming-section">
+    <h4>Thread Pool & Performance Optimization</h4>
+    <div class="programming-overview">
+        <p><strong>Background:</strong> 8-week specialization project at The Game Assembly (4 weeks at 10h/week, then 4 weeks at 20h/week) focusing on optimization of an old game project using our in-house engine.</p>
+    </div>
+    
+    <div class="programming-details">
+        <p><strong>Optimization Goals:</strong> I chose to increase the overall performance by implementing multithreading via a thread pool and geometry instancing for static meshes. Testing was done by comparing performance with and without threading when rendering enemies.</p>
+        
+        <p><strong>Results:</strong> Achieved a performance increase of ca 2-2.5 times the old frame rate when rendering 1500 enemies with about 17,000 vertices each, tested on Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz and NVIDIA GeForce RTX 2080.</p>
+    </div>
+    
+    <div class="programming-images">
+        <a href="./png/threadpool1.gif" data-lightbox="threadpool" data-title="Thread pool running with frame rate around 50 fps">
+            <img src="./png/threadpool1.gif" alt="Thread pool performance demo">
+        </a>
+        <a href="./png/threadpool2.gif" data-lightbox="threadpool" data-title="Without thread pool with frame rate around 20 fps">
+            <img src="./png/threadpool2.gif" alt="Performance without threading">
+        </a>
+        <p><em>Performance comparison: Thread pool vs single-threaded rendering</em></p>
+    </div>
+    
+    <div class="programming-details">
+        <p><strong>Thread Pool Implementation:</strong> The thread pool uses a job system that pushes jobs via lambda functions and executes them back to front. It has a counter to track unfinished jobs, though I never needed to halt the program since all systems work independently.</p>
+        
+        <p><strong>Batching Jobs:</strong> I discovered that pushing many small jobs decreased performance. The solution was pushing bigger jobs and partitioning the number of enemies each thread updates.</p>
+        
+        <p><strong>Future Improvements:</strong> With more time, I would have implemented job stealing and the ability to assign child jobs to a parent job.</p>
+    </div>
+    
+    <div class="programming-images">
+        <a href="./png/threadpool3.png" data-lightbox="threadpool" data-title="Job function implementation">
+            <img src="./png/threadpool3.png" alt="Job function code">
+        </a>
+        <a href="./png/threadpool4.png" data-lightbox="threadpool" data-title="Get job implementation">
+            <img src="./png/threadpool4.png" alt="Get job code">
+        </a>
+        <a href="./png/threadpool5.png" data-lightbox="threadpool" data-title="Thread pool system overview">
+            <img src="./png/threadpool5.png" alt="Thread pool architecture">
+        </a>
+        <p><em>Thread pool implementation details and code structure</em></p>
+    </div>
+    
+    <div class="programming-details">
+        <p><strong>Lessons Learned:</strong> Refactoring a nearly finished project and implementing improvements the code wasn't designed for is challenging, but rewarding when you see the performance gains. I also experimented with vertex animation textures for skeletal meshes, but found the GPU performed worse due to recalculating textures each frame - it would work better for looping animations with static world positions.</p>
+    </div>
+</div>
+
+
+
+
+    <div class="programming-section">
+        <h4>Vertex Animation Texture System</h4>
+        <div class="programming-overview">
+            <p><strong>Goal:</strong> Optimize skeletal animation performance by storing bone matrices in textures for GPU instancing.</p>
+        </div>
+        
+        <div class="programming-details">
+            <p><strong>Implementation:</strong> I implemented a technique that writes all bone transformation matrices into a texture, enabling instanced rendering of skeletal meshes. Each bone's transformation data gets packed into texture pixels and uploaded to the GPU for parallel processing.</p>
+            
+            <p><strong>Technical Details:</strong> The texture is organized with each row containing bone matrices for one character instance. This allows packing up to 16,000 enemies into a single texture, though I limited it to 1,500 for performance reasons.</p>
+            
+            <p><strong>Current Status:</strong> The system works but has issues with position calculations and normal generation that need fixing before production use.</p>
+        </div>
+        
+<div class="programming-images">
+    <a href="./png/code.png" data-lightbox="programming" data-title="Code implementation">
+        <img src="./png/code.png" alt="Vertex animation code implementation">
+    </a>
+    <a href="./png/texture.png" data-lightbox="programming" data-title="Bone texture visualization">
+        <img src="./png/texture.png" alt="Bone matrix texture visualization">
+    </a>
+    <p><em>Visualization of bone matrix data packed into texture (1500 enemies)</em></p>
+</div>
+    </div>
+
+    <div class="programming-section">
+        <h4>Binary Serialization System</h4>
+        <div class="programming-overview">
+            <p><strong>Problem:</strong> JSON level loading took too long in debug mode, slowing down team workflow.</p>
+            <p><strong>Solution:</strong> Template-based binary serialization system that reduced load times by 9 seconds.</p>
+        </div>
+        
+        <div class="programming-details">
+            <p><strong>Implementation:</strong> Created a template class that automatically serializes/deserializes data types to binary format. The system is straightforward to use and significantly faster than JSON parsing.</p>
+            
+            <p><strong>Limitations & Future Work:</strong> Structs require manual serialization functions due to template limitations. Automating struct serialization would be the next improvement.</p>
+            
+            <p><strong>Impact:</strong> Saved hours of development time by eliminating 9-second waits every time team members loaded levels during development.</p>
+        </div>
+    </div>
+
+
+
+
+
+</div>
