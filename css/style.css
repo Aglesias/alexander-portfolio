@@ -27,9 +27,9 @@ a:hover {
 
 /* Game container styles */
 .game-container {
-    height: 90vw;
-    width: 90vw;  /* Fill most of the viewport width */
     max-width: 1200px;       /* Optional cap so it doesn’t get too huge on very large screens */
+    height: 80vw;
+    width: 90vw;  /* Fill most of the viewport width */
     background-color: rgba(0, 0, 20, 0.7);
     box-shadow: 0 0 20px rgba(0, 0, 255, 0.3), inset 0 0 30px rgba(0, 0, 60, 0.5);
 }
