@@ -27,6 +27,7 @@ a:hover {
 
 /* Game container styles */
 .game-container {
+    max-height: 800px;
     max-width: 1200px;       /* Optional cap so it doesn’t get too huge on very large screens */
     height: 80vw;
     width: 90vw;  /* Fill most of the viewport width */
