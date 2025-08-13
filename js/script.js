@@ -4,13 +4,16 @@ const buttons = document.querySelectorAll('.menu-button');
 const menuItems = document.querySelectorAll('.menu-item');
 
 // Load initial page when document is ready
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() 
+{
     loadContent('home'); // Load home page initially
     createSteppedGradient();
 
     // Add click event handlers for each button
-    buttons.forEach(button => {
-        button.addEventListener('click', function() {
+    buttons.forEach(button => 
+    {
+        button.addEventListener('click', function() 
+        {
             buttons.forEach(btn => btn.classList.remove('active')); // Remove active class from all buttons
             this.classList.add('active'); // Add active class to clicked button
             
@@ -21,8 +24,10 @@ document.addEventListener('DOMContentLoaded', function() {
             playMenuSound(); // Play menu sound
             
             // Scroll to content area on mobile
-            if (window.innerWidth <= 600) {
-                setTimeout(() => {
+            if (window.innerWidth <= 600) 
+            {
+                setTimeout(() => 
+                {
                     contentArea.scrollIntoView({ behavior: 'smooth' });
                 }, 100);
             }
@@ -30,20 +35,24 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Handle hover for menu items
-    menuItems.forEach(item => {
-        item.addEventListener('mouseenter', function() {
+    menuItems.forEach(item => 
+    {
+        item.addEventListener('mouseenter', function() 
+        {
             menuItems.forEach(mi => mi.classList.remove('show-cursor')); // Remove cursor from all items
             this.classList.add('show-cursor'); // Add cursor to current item
         });
         
-        item.addEventListener('mouseleave', function() {
+        item.addEventListener('mouseleave', function() 
+        {
             this.classList.remove('show-cursor'); // Remove cursor from this item
             updateCursorVisibility(); // Show cursor on active button
         });
     });
     
     // Clear all cursor texts
-    document.querySelectorAll('.cursor').forEach(cursor => {
+    document.querySelectorAll('.cursor').forEach(cursor => 
+    {
         cursor.textContent = '';
     });
     
@@ -55,46 +64,56 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Update cursor visibility based on active button
-function updateCursorVisibility() {
+function updateCursorVisibility() 
+{
     menuItems.forEach(item => item.classList.remove('show-cursor')); // Clear cursor from all items
     
     const activeButton = document.querySelector('.menu-button.active');
-    if (activeButton) {
+    if (activeButton) 
+    {
         const activeItem = activeButton.closest('.menu-item');
-        if (activeItem) {
+        if (activeItem) 
+        {
             activeItem.classList.add('show-cursor'); // Show cursor on active item
         }
     }
 }
 
 // Load content based on section
-function loadContent(section) {
+function loadContent(section) 
+{
     const oldContent = contentArea.innerHTML; // Spara gammalt innehåll
     
     fetch(`content/${section}.html`)
-        .then(response => {
-            if (!response.ok) {
+        .then(response => 
+        {
+            if (!response.ok) 
+            {
                 throw new Error('Network response was not ok');
             }
             return response.text();
         })
-        .then(html => {
+        .then(html => 
+        {
             // Använd övergångseffekten istället för direkt byte
             createRPGTransitionEffect(oldContent, html);
         })
-        .catch(error => {
+        .catch(error => 
+        {
             console.error('Error loading content:', error);
             contentArea.innerHTML = '<p>Error loading content. Please try again.</p>';
         });
 }
 
 // Play menu sound (placeholder for actual sound implementation)
-function playMenuSound() {
+function playMenuSound() 
+{
     console.log('Menu sound played');
 }
 
 // Handle keyboard navigation
-function handleKeyNavigation(e) {
+function handleKeyNavigation(e) 
+{
     const activeButton = document.querySelector('.menu-button.active');
     const menuItems = Array.from(document.querySelectorAll('.menu-item'));
     const currentIndex = menuItems.findIndex(item => 
@@ -102,7 +121,8 @@ function handleKeyNavigation(e) {
     
     let nextIndex = currentIndex;
     
-    switch(e.key) {
+    switch(e.key) 
+    {
         case 'ArrowUp':
         case 'ArrowLeft':
             nextIndex = Math.max(0, currentIndex - 1);
@@ -120,7 +140,8 @@ function handleKeyNavigation(e) {
             break;
     }
     
-    if (nextIndex !== currentIndex) {
+    if (nextIndex !== currentIndex) 
+    {
         menuItems[nextIndex].querySelector('.menu-button').click();
         updateCursorVisibility();
     }
@@ -128,7 +149,8 @@ function handleKeyNavigation(e) {
 
 
 
-function createSteppedGradient() {
+function createSteppedGradient() 
+{
     const container = document.getElementById('retro-gradient');
     if (!container) return; // Check if this condition might be causing issues
     
@@ -141,7 +163,8 @@ function createSteppedGradient() {
         '#000038'
     ];
     
-    colors.forEach((color, index) => {
+    colors.forEach((color, index) => 
+    {
         const step = document.createElement('div');
         step.style.position = 'absolute';
         step.style.left = '0';
@@ -163,29 +186,15 @@ function createSteppedGradient() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Funktion för att skapa en pixelerad övergångseffekt
-function createRPGTransitionEffect(oldContent, newContent) {
+function createRPGTransitionEffect(oldContent, newContent) 
+{
     // Hämta position och dimensioner för contentArea
     const contentRect = contentArea.getBoundingClientRect();
     
     // Definiera marginaler för effektområdet
-    const margin = {
+    const margin = 
+    {
         top: 6,
         right: -5,
         bottom: 6,
@@ -202,11 +211,14 @@ function createRPGTransitionEffect(oldContent, newContent) {
     overlay.style.overflow = 'hidden'; // Begränsa innehåll till overlay
     
     // Anpassa overlay-storlek baserat på skärmstorlek och med dina önskade marginaler
-    if (window.innerWidth <= 600) {
+    if (window.innerWidth <= 600) 
+    {
         // På mobil: menyn är längst ner, så begränsa höjden
         overlay.style.width = (contentRect.width - margin.left - margin.right) + 'px';
         overlay.style.height = (contentRect.height - 140 - margin.top - margin.bottom) + 'px'; // Exkludera menyns höjd + marginaler
-    } else {
+    } 
+    else 
+    {
         // På desktop: menyn är till höger, så begränsa bredden
         overlay.style.width = (contentRect.width - 185 - margin.left - margin.right) + 'px'; // Exkludera menyns bredd (185px) + marginaler
         overlay.style.height = (contentRect.height - margin.top - margin.bottom) + 'px'; // Lägg till marginaler
@@ -236,7 +248,8 @@ function createRPGTransitionEffect(oldContent, newContent) {
     let contentUpdated = false;
     
     // Animationsfunktion
-    function animate(currentTime) {
+    function animate(currentTime) 
+    {
         const elapsed = currentTime - startTime;
         progress = Math.min(elapsed / duration, 1);
         
@@ -247,15 +260,19 @@ function createRPGTransitionEffect(oldContent, newContent) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         // Skapa SNES RPG-liknande övergångseffekter
-        if (progress < 0.5) {
+        if (progress < 0.5) 
+        {
             // Första halvan: Effekter ökar
             createRPGPixelEffect(ctx, canvas.width, canvas.height, progress * 2);
-        } else {
+        } 
+        else 
+        {
             // Andra halvan: Effekter minskar
             createRPGPixelEffect(ctx, canvas.width, canvas.height, (1 - (progress - 0.5) * 2));
             
             // Uppdatera innehållet precis efter mittpunkten om det inte redan är gjort
-            if (!contentUpdated) {
+            if (!contentUpdated) 
+            {
                 contentArea.innerHTML = newContent;
                 contentUpdated = true;
                 
@@ -283,7 +300,8 @@ function createRPGTransitionEffect(oldContent, newContent) {
 }
 
 // Funktion för att rita en stiliserad avgränsare runt effektområdet
-function drawBorder(ctx, width, height, progress) {
+function drawBorder(ctx, width, height, progress) 
+{
     const borderWidth = 4; // Bredden på avgränsaren
     
     // Skapa en gradient för avgränsaren som pulserar med progress
@@ -334,11 +352,13 @@ function drawBorder(ctx, width, height, progress) {
 }
 
 // Funktion för att lägga till scanlines på kanterna
-function addBorderScanlines(ctx, width, height, borderWidth) {
+function addBorderScanlines(ctx, width, height, borderWidth) 
+{
     ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
     
     // Horisontella scanlines (övre och nedre kant)
-    for (let x = 0; x < width; x += 4) {
+    for (let x = 0; x < width; x += 4) 
+    {
         // Övre kant
         ctx.fillRect(x, 0, 2, borderWidth);
         // Nedre kant
@@ -346,7 +366,8 @@ function addBorderScanlines(ctx, width, height, borderWidth) {
     }
     
     // Vertikala scanlines (vänster och höger kant)
-    for (let y = 0; y < height; y += 4) {
+    for (let y = 0; y < height; y += 4) 
+    {
         // Vänster kant
         ctx.fillRect(0, y, borderWidth, 2);
         // Höger kant
@@ -355,7 +376,8 @@ function addBorderScanlines(ctx, width, height, borderWidth) {
 }
 
 // Funktion för att lägga till hörneffekter
-function addCornerEffects(ctx, width, height, borderWidth, progress) {
+function addCornerEffects(ctx, width, height, borderWidth, progress) 
+{
     const cornerSize = borderWidth * 3;
     const pulseSize = borderWidth * (1 + Math.sin(progress * Math.PI * 2) * 0.3);
     
@@ -378,7 +400,8 @@ function addCornerEffects(ctx, width, height, borderWidth, progress) {
 }
 
 // Funktion för att skapa pixeleringseffekt i SNES RPG-stil
-function createRPGPixelEffect(ctx, width, height, intensity) {
+function createRPGPixelEffect(ctx, width, height, intensity) 
+{
     // Rensa canvas först
     ctx.clearRect(0, 0, width, height);
     
@@ -400,13 +423,15 @@ function createRPGPixelEffect(ctx, width, height, intensity) {
         addEnhancedGlitchEffect(ctx, width, height, intensity);
     }
 }
-function addEnhancedScanlines(ctx, width, height, intensity) {
+function addEnhancedScanlines(ctx, width, height, intensity) 
+{
     // Beräkna scanline-täthet baserat på intensitet
     const lineSpacing = Math.max(2, Math.floor(4 * (1 - intensity * 0.5)));
     const lineHeight = Math.max(1, Math.floor(2 * intensity));
     
     // Skapa scanlines med varierande opacitet
-    for (let y = 0; y < height; y += lineSpacing) {
+    for (let y = 0; y < height; y += lineSpacing) 
+    {
         // Variera opaciteten för en mer dynamisk effekt
         const opacity = 0.3 + (Math.sin(y * 0.1) * 0.2 + 0.2) * intensity;
         ctx.fillStyle = `rgba(0, 0, 0, ${opacity})`;
@@ -415,7 +440,8 @@ function addEnhancedScanlines(ctx, width, height, intensity) {
     
     // Lägg till några horisontella störningslinjer
     const numDistortionLines = Math.floor(intensity * 3);
-    for (let i = 0; i < numDistortionLines; i++) {
+    for (let i = 0; i < numDistortionLines; i++) 
+    {
         const y = Math.floor(Math.random() * height);
         const lineOpacity = 0.3 + Math.random() * 0.4;
         ctx.fillStyle = `rgba(255, 255, 255, ${lineOpacity})`;
@@ -424,7 +450,8 @@ function addEnhancedScanlines(ctx, width, height, intensity) {
 }
 
 // Funktion för förbättrade vågeffekter
-function addEnhancedWaveEffect(ctx, width, height, intensity) {
+function addEnhancedWaveEffect(ctx, width, height, intensity) 
+{
     // Skapa en temporär canvas för att spara originalbilden
     const tempCanvas = document.createElement('canvas');
     tempCanvas.width = width;
@@ -445,7 +472,8 @@ function addEnhancedWaveEffect(ctx, width, height, intensity) {
     const secondaryFrequency = 0.02 + intensity * 0.05;
     
     // Rita med vågdistortion
-    for (let y = 0; y < height; y++) {
+    for (let y = 0; y < height; y++) 
+    {
         // Kombinera två vågor för mer komplex effekt
         const primaryOffset = Math.sin(y * primaryFrequency) * primaryAmplitude;
         const secondaryOffset = Math.cos(y * secondaryFrequency + intensity * Math.PI) * secondaryAmplitude;
@@ -460,9 +488,11 @@ function addEnhancedWaveEffect(ctx, width, height, intensity) {
     }
     
     // Lägg till vertikal stretch/kompression på vissa rader om intensiteten är hög
-    if (intensity > 0.7) {
+    if (intensity > 0.7) 
+    {
         const stretchPoints = Math.floor(intensity * 5);
-        for (let i = 0; i < stretchPoints; i++) {
+        for (let i = 0; i < stretchPoints; i++) 
+        {
             const centerY = Math.floor(Math.random() * height);
             const stretchHeight = Math.floor(Math.random() * 10) + 5;
             const compressionFactor = 0.7 + Math.random() * 0.6; // 0.7-1.3
@@ -477,7 +507,8 @@ function addEnhancedWaveEffect(ctx, width, height, intensity) {
         }
     }
 }
-function addColorShiftEffect(ctx, width, height, intensity) {
+function addColorShiftEffect(ctx, width, height, intensity) 
+{
     // Endast tillämpa färgförskjutning vid högre intensitet
     if (intensity < 0.3) return;
     
@@ -493,8 +524,10 @@ function addColorShiftEffect(ctx, width, height, intensity) {
     const blueShift = Math.floor(intensity * 3);
     
     // Applicera färgförskjutning
-    for (let y = 0; y < height; y++) {
-        for (let x = 0; x < width; x++) {
+    for (let y = 0; y < height; y++) 
+    {
+        for (let x = 0; x < width; x++) 
+        {
             const index = (y * width + x) * 4;
             
             // Förskjut röd kanal åt höger
@@ -516,7 +549,8 @@ function addColorShiftEffect(ctx, width, height, intensity) {
 }
 
 
-function addEnhancedGlitchEffect(ctx, width, height, intensity) {
+function addEnhancedGlitchEffect(ctx, width, height, intensity) 
+{
     // Beräkna antal glitcheffekter baserat på intensitet
     const numGlitches = Math.floor(intensity * 5);
     
@@ -528,11 +562,13 @@ function addEnhancedGlitchEffect(ctx, width, height, intensity) {
     tempCtx.drawImage(ctx.canvas, 0, 0);
     
     // Skapa olika typer av glitcheffekter
-    for (let i = 0; i < numGlitches; i++) {
+    for (let i = 0; i < numGlitches; i++) 
+    {
         // Välj slumpmässigt en av flera glitch-typer
         const glitchType = Math.floor(Math.random() * 3);
         
-        switch (glitchType) {
+        switch (glitchType) 
+        {
             case 0: // Horisontell linjeförskjutning
                 const y = Math.floor(Math.random() * height);
                 const h = Math.floor(Math.random() * 8) + 2;
@@ -560,7 +596,8 @@ function addEnhancedGlitchEffect(ctx, width, height, intensity) {
                 break;
                 
             case 2: // Flimmereffekt
-                if (Math.random() < intensity * 0.7) {
+                if (Math.random() < intensity * 0.7) 
+                {
                     const flickerY = Math.floor(Math.random() * height);
                     const flickerHeight = Math.floor(Math.random() * 4) + 1;
                     
@@ -573,7 +610,8 @@ function addEnhancedGlitchEffect(ctx, width, height, intensity) {
     }
     
     // Ibland, lägg till en "bruten skärm"-effekt
-    if (intensity > 0.8 && Math.random() < 0.3) {
+    if (intensity > 0.8 && Math.random() < 0.3) 
+    {
         const breakY = Math.floor(height * 0.3 + Math.random() * height * 0.4);
         const breakHeight = Math.floor(height * 0.05);
         
